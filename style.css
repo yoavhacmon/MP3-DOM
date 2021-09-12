@@ -1,1 +1,45 @@
 /* Your code here */
+body{
+    background-color: black;
+    margin-left: 15%;
+    padding: 30px;
+    background-size: cover;
+     height: 100%;
+}
+#songs, #playlists{
+    color: #e3ebe6;
+    background-color: cornflowerblue;
+    width: 50vw;
+    margin-left: 100px;
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    font-size: 25px;
+    font-family: Arial, Helvetica, sans-serif  ;
+    font-weight: lighter;
+    letter-spacing: 1.5px;
+}
+.songs, .playlists{
+    padding-top: 40px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    width: 60vw;
+    margin-top: 20px;
+
+}
+.songs img{
+    display: block;
+    margin-top: -125px;
+    height: 150px;
+}
+.songs div{
+    color: black;
+    display: block;
+    margin-left: 200px;
+}
+
+.nowPlaying{
+    background-color: whitesmoke;
+    
+}
