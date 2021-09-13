@@ -16,35 +16,6 @@ function secondsToMmss(duration) {
     return minutes + ":" + seconds;
 }
 
-const identifySong = (id) => {
-    for (let i of player.songs) if (i.id === id) return i;
-}
-function playSong(songId) {
-    if (document.getElementsByClassName("nowPlaying").length !== 0) {
-        const previuslyPlayed = document.getElementsByClassName("nowPlaying");
-        previuslyPlayed[0].classList.remove("nowPlaying");
-    }
-    const song = document.getElementById(`${songId}`)
-    song.classList.add("nowPlaying")
-    return song
-}
-
-
-/**
- * Creates a song DOM element based on a song object.
- */
-function createSongElement({ id, title, album, artist, duration, coverArt }) {
-    const coverArtPic = coverArt
-    const children = [title, album, artist, secondsToMmss(duration)]
-    const classes = ["songs"]
-    const attrs = { id, onclick: `playSong(${id})` }
-    return createElement("div", children, classes, attrs, coverArtPic)
-}
-
-
-/**
- * Creates a playlist DOM element based on a playlist object.
- */
 function playlistDuration(id) {
     let totalDuration = 0;
     for (let i of player.playlists) {
@@ -63,15 +34,56 @@ function playlistDuration(id) {
     } return totalDuration;
 }
 
-function createPlaylistElement({ name, songs }) {
-    for (let playlist of player.playlists) {
-        let id = playlist.id;
-        playlistDuration(id);
+const identifySong = (id) => {
+    for (let i of player.songs) if (i.id === id) return i;
+}
 
+function playSong(songId) {
+    if (document.getElementsByClassName("nowPlaying").length!==0){
+        const previuslyPlayed = document.getElementsByClassName("nowPlaying")
+        previuslyPlayed[0].classList.remove("nowPlaying")
     }
-    const children = [name, songs, totalDuration];
+    const song = document.getElementById(`${songId}`)
+    song.classList.add("nowPlaying")
+    return song
+}
 
-    return createElement("div", children);
+
+/**
+ * Creates a song DOM element based on a song object.
+ */
+function createSongElement({ id, title, album, artist, duration, coverArt }) {
+    const titleEl = createElement("h2", [title]);
+    const albumEl = createElement("ul", "Album: ");
+    albumEl.append(album);
+    const artistEl = createElement("ul", "Artist: ");
+    artistEl.append(artist);
+    const durationEl = createElement("ul", "Duration: ");
+    durationEl.append(secondsToMmss(duration))
+    const imgEl = createElement("img", [], ["album-art"], { src: coverArt });
+    const children = [titleEl, albumEl, artistEl, durationEl, imgEl]
+    const classes = ["songs"]
+    const attrs = { id ,onclick: `playSong(${id})` }
+   
+    return createElement("div", children, classes, attrs,)
+}
+
+
+/**
+ * Creates a playlist DOM element based on a playlist object.
+ */
+function createPlaylistElement({ id, name, songs }) {
+    const nameEl = createElement("h2", "Name: ");
+    nameEl.append(name);
+    const songsEl = createElement("h2", "Songs: ");
+    songsEl.append(songs);
+    const playlistDur = playlistDuration(id);
+    const totalDurationInMmss = secondsToMmss(playlistDur);;
+    const totalDurationEl = createElement("h4", totalDurationInMmss)
+    const children = [nameEl, songsEl, totalDurationEl]
+    const classes = ["playlists"] 
+    const attrs = {id}
+    return createElement("div", children, classes, attrs)
 }
 
 
@@ -88,38 +100,38 @@ function createPlaylistElement({ name, songs }) {
  * @param {Array} classes - the class list of the new element
  * @param {Object} attributes - the attributes for the new element
  */
-function createElement(tagName, children = [], classes = [], attributes = {}, coverArtPic = "") {
-    let newElement = document.createElement(tagName)
-    for (let [att, value] of Object.entries(attributes)) {
-        newElement.setAttribute(`${att}`, `${value}`)
+ function createElement(tagName, children = [], classes = [], attributes = {}) {
+    const el = document.createElement(tagName);
+  
+    // Children
+    for (const child of children) {
+      el.append(child);
     }
-    for (let cls of classes) {
-        newElement.classList.add(`${cls}`)
+  
+    // Classes
+    for (const cls of classes) {
+      el.classList.add(cls);
     }
-    for (let child of children) {
-        const newChild = document.createElement(tagName)
-        newChild.textContent = `${child}`
-        newElement.appendChild(newChild)
+  
+    // Attributes
+    for (const attr in attributes) {
+      el.setAttribute(attr, attributes[attr]);
     }
-    if (coverArtPic.length > 0) {
-        const coverArt = document.createElement("img")
-        coverArt.setAttribute("src", `${coverArtPic}`)
-        newElement.appendChild(coverArt)
-    }
-    return newElement
-}
+  
+    return el;
+  }
 
 
 // You can write more code below this line
-
 for (let i of player.songs) {
     const songsElement = document.getElementById("songs")
     const song = createSongElement(i)
     songsElement.appendChild(song);
-}
-
-for (let j of player.playlists) {
+  }
+  
+  for (let i of player.playlists) {
     const playlistElement = document.getElementById("playlists")
-    const playlist = createPlaylistElement(j)
+    const playlist = createPlaylistElement(i)
     playlistElement.appendChild(playlist)
-}
+  }
+  
