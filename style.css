@@ -1,1 +1,43 @@
 /* Your code here */
+body{
+    background-color: black;
+    margin-left: 15%;
+    padding: 30px;
+    background-size: cover;
+    height: 100%;
+}
+h1{
+    color: black;
+    font-size: 75px;
+    padding: 30px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+#songs, #playlists{
+    color: black;
+    background-color: palegreen;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    width: 60vw;
+    margin-top: 20px;
+    border-width: 6px;
+    border-radius: 7px;
+    border-style: groove;
+    border-color: red;
+}
+.songs, .playlists{
+    width: 60vw;
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+.nowPlaying{
+    color: blue;
+    background-color: whitesmoke;
+    border-width: 8px;
+    border-color: black;
+   
+    
+}
